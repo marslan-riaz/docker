@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules     # this represents that make a place holder "node_modules" but donot create a refer toward local dorectory
+      - .:/app  # this refers to create a placeholder in docker file and make reference toward local directory
+
+# sole purpose to run a test
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - . :/app
+    command: ["npm", "run", "test"]
